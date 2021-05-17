@@ -7,7 +7,7 @@ Change the tag Benign and Attack to 0 and 1 to process it
 
 
 252.673 	Attack samples DdoS
-	231.073 Attack DoS Hulk
+	231.073 Attack DoS Hulk<
 	 10.293 Attack DoS GoldenEye
 	  5.796 Attack DoS SlowLoris
 	  5.499 Attack DoS SlowHttpTest
@@ -27,7 +27,6 @@ Bening vs 1 type of DoS
 
 
 
-
 DoS Hulk:
 B.Packet Len Std 	0.2028
 B.Packet Len Std 	0.1277
@@ -43,3 +42,28 @@ These calculations can be adjusted in the “Statistics” section of the Prefer
 Burst Start
 The start time, in seconds from the beginning of the capture, for the interval with the maximum number of packets.
 You can show statistics for a portion of the capture by entering a display filter into the Display filter entry and pressing Apply.
+
+
+
+
+
+
+
+
+
+
+
+- Select 10.000 samples of the whole dataset 
+- Split 10k in 5k test and 5k training, always the same. Depending on the classifier,
+for example for SVM (as is really slow) we would take a sample of that 5k+5k sample, to
+make it quicker. Select always Hulk. Try at least SVM with rbf (to have to choose the sigma
+and the c margin)and Neighbours(keep the best case and compare it for the SVM and try to get it
+with SVM) once we get a good result for SVM, we try it with the full 5k+5k, and leave it a long time
+for the pc, just to know if is as good as we thought.
+- If we have time, try forest or trees
+
+
+
+
+
+
