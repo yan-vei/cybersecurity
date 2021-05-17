@@ -6,7 +6,9 @@ Created on Wed May  5 15:45:07 2021
 """
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn import svm
+from sklearn import metrics
 
 dataset = pd.read_csv("data.csv")
 
@@ -14,7 +16,7 @@ dataset = pd.read_csv("data.csv")
 proportions = {'DoS Hulk': 0.3335, 'DoS GoldenEye': 0.015, 'DoS SlowLoris': 0.0084, 
                'DoS SlowHttpTest': 0.00785, 'BENIGN': 0.6345, 'Heartbleed': 0.000016}
 
-N = 10000 # number of samples to be sampled
+N = 1000 # number of samples to be sampled
 
 # Obtaining a stratified sample according to the proportions
 subset = dataset.groupby(' Label', group_keys=False).apply(lambda x: x.sample(int(np.rint(N*len(x)/len(dataset))))).sample(frac=1).reset_index(drop=True)
@@ -35,7 +37,3 @@ for i in subset[' Label']:
 X = subset[subset.columns[0:-1]].astype(dtype=np.float32).to_numpy()
 X = np.nan_to_num(X)
 
-# We will use RandomForestRegressor that doesn't require any preprocessing/scaling
-# of data in order to weigh the features
-regr = RandomForestRegressor(random_state=0)
-regr.fit(X, y)
