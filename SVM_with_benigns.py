@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon May 17 18:21:41 2021
+Created on Mon May 17 21:04:22 2021
 
 @author: Yana
 """
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -14,19 +15,9 @@ import matplotlib.pyplot as plt
 train = pd.read_csv("train.csv")
 test = pd.read_csv("test.csv")
 
-y_train = []
-for i in train[' Label']:
-    if i == 'HULK':
-        y_train.append(1)
-    else:
-        y_train.append(0)
-        
-y_test = []
-for i in test[' Label']:
-    if i == 'HULK':
-        y_test.append(1)
-    else:
-        y_test.append(0)
+# Classifying BENIGNs as 1
+y_train = train['Label'].to_numpy()  
+y_test = test['Label'].to_numpy()
 
 X_train = train[train.columns[0:-1]].astype(dtype=np.float32).to_numpy()
 X_train = np.nan_to_num(X_train)
