@@ -27,9 +27,9 @@ X_test = np.nan_to_num(X_test)
 
 # We can use preprocessing - MinMaxScaler - in particular to optimize the scales of the values of the features
 # of the train and test sets
-# scaler = MinMaxScaler()
-# X_train = scaler.fit_transform(X_train)
-# X_test = scaler.fit_transform(X_test)
+scaler = MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.fit_transform(X_test)
 
 accuracies = []
 recalls = []
@@ -37,7 +37,7 @@ precisions = []
 f1_scores = []
 
 for i in range(5):
-    clf = SVC(C=1, kernel='rbf', gamma='scale')
+    clf = SVC(C=10, kernel='rbf', gamma='scale')
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_test)
 
