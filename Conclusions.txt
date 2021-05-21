@@ -1,0 +1,87 @@
+***Cybersecurity Machine Learning Final Project***
+***University of Valencia, Spring 2021***
+***by Marc Mestre Cañón and Yana Veitsman***
+
+Goal:
+Compare 3 types of classifiers - Decision Tree, KN-neighbors, and Support Vector Machine - and their
+ability to correctly classify between an example of benign and malicious traffic
+
+Dataset:
+https://www.unb.ca/cic/datasets/ids-2017.html
+Wednesday, July 5, 2017
+
+Initial dataset structure:
+[*] 80 features per each sample
+[*] Traffic:
+440.031 	Benign Traffic samples
+252.673 	Attack samples DdoS
+	231.073 Attack DoS Hulk
+	 10.293 Attack DoS GoldenEye
+	  5.796 Attack DoS SlowLoris
+	  5.499 Attack DoS SlowHttpTest
+		 11 Heartbleed
+692.703 	All samples
+
+Modified dataset:
+As our primary goal was to distinguish between an example of benign and malicious traffic,
+we artificially modified the original problem according to our needs. That is:
+We selected 2 stratified samples of 5.000 samples each and saved them as train.csv and test.csv files respectively
+to later use for training and testing.
+Then, using the script BenignVSRestScript.py, we relabled the data in a fashion that each sample of 
+Benign traffic was given a label value of 1 and each sample of attack traffic was given a label value
+of 0
+
+Preprocessing method:
+In KN-neighbors and SVC we use MinMaxScaler as a preprocessing method, since our data features have a very big range of values
+(for example, some of them are the quantity of bits/packages flowing). 
+According to the sklearn library's manual, MinMaxScaler "transforms features by scaling each feature to a given range.
+This estimator scales and translates each feature individually such that it is in the given range on the training set, 
+e.g. between zero and one."
+
+Decision Tree:
+For a decision tree classifier we selected the most basic decision tree available in sklearn library.
+No preprocessing or any other preparation of data was done for this classifier.
+Corresponding file: DecisionTree.py
+
+KN-neighbors:
+We used the KN-neighbors classifier available in sklearn library. We considered a number of neighbors varying from
+1 to 20, as well as preprocessing and no preprocessing of data with MinMaxScaler.
+Corresponding file: KNeighbors.py
+
+SVC:
+We used a basic SVM - SVC - available in sklearn library. This type of classifier, according to sklearn library,
+works worse with datasets that have more than 10.000 samples, but our datasets were fixed to 5.000 samples for training
+and testing. 
+Firstly, we evaluated the model with no preprocessing.
+Secondly, we introduced preprocessing with MinMaxScaler.
+Thirdly, we looked for the best pair of values of C and gamma for the classifier.
+Corresponding files: SVM.py and SVM_gamma_and_C_selection.py
+
+Conclusions:
+1. The best classifer for this type of problem is a decision tree:
+	- it is more computationally effective (the best running time result)
+	- it doesn't require any preprocessing of data
+	- it deals well with the features with values of very different sizes as well as with binary features
+		that are present in the dataset, because it looks for the best feature that is going to be a base
+		for the separation of 2 classes
+	- it gives the best precision, recall, and accuracy values
+	
+2. The second best classifier for this problem is KN-neighbors:
+	- it doesn't require preprocessing; in fact, preprocessing with MinMaxScaler only worsens the results:
+		it increases the recall, but reduces precision, which is crucial for the problem (as a consequence,
+		f1-score is also effected)
+	- the best number of neighbors to be used seems to be 1-2 neighbors
+	- without preprocessing KN-neighbors behaves better, because neighbors are close enough to each other to classify
+		correctly, but if we rescale the features' values with MinMaxScaler, they might become too close together
+		and in one area there will be more samples of different classes, which reduces overall accuracy of our
+		classification
+		
+3. The last classifier is SVC:
+	- without preprocessing SVC is only capable of achieving ~65% accuracy and precision, despite having good recall results
+	- after preprocessing with MinMaxScaler it seems that the accuracy and precision improve by at least 20%
+	- selecting C and gamma without preprocessing, despite whatever small or big values we take, doesn't improve the performance
+		of the classifier; however, after preprocessing, even a small change in C and gamma seems to be affecting the performance 
+		of the classifier more
+	- the best value pair for C and gamma seems to be between 1 and 10, which might indicate that our margin is quite small
+		and the hyperplane dividing the classes is quite straight
+		

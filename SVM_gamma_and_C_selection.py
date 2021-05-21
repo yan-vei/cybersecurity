@@ -1,19 +1,25 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
 from sklearn.preprocessing import MinMaxScaler  
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
+# This file contains 3D-plots for the SVM classifier's metrics 
+# In order to calculate the best possible pair of C and gamma values
+
+# Here we have 2 sets of data that will remain constant during the whole training/testing process.
+# Each dataset contains 5.000 samples (stratified) from the original dataset of Wednesday's traffic
+# As we are targeting BENIGN traffic, BENIGN samples have label 1 and attacks have label 0
 train = pd.read_csv("train.csv")
 test = pd.read_csv("test.csv")
 
-# Classifying BENIGNs as 1
+# Classifying BENIGNs as 1 and assigning labels to corresponding arrays
 y_train = train['Label'].to_numpy()  
 y_test = test['Label'].to_numpy()
 
+# Assigning the rest of the data to the datasets, converting values of features
+# to float32 and to numpy arrays (sklearn by default uses 32 bits precision)
 X_train = train[train.columns[0:-1]].astype(dtype=np.float32).to_numpy()
 X_train = np.nan_to_num(X_train)
 
@@ -26,6 +32,9 @@ scaler = MinMaxScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.fit_transform(X_test)
 
+#################################################
+
+# We pepare several 3D-plots for the general metrics
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111, projection='3d')
 ax1.set_title("Accuracies")
@@ -54,9 +63,10 @@ ax4.set_xlabel("C")
 ax4.set_ylabel("Gamma")
 ax4.set_zlabel("F1_score")
 
-
+# Trying medium values of C and gamma
 for C_ in range(1,10,1):
     for gamma_ in range (1,10,1):
+        # Prepare arrays for the metrics of the SVM classifier: accuracies, recalls, precisions
         accuracies = []
         recalls = []
         precisions = []
@@ -88,9 +98,9 @@ plt.show()
 
 #################################################
 
-#Small ones
+# Small ones
 
-
+# Prepare plots
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111, projection='3d')
 ax1.set_title("Accuracies")
@@ -154,8 +164,9 @@ plt.show()
 
 #################################################
 
-#Big ones
+# Big ones
 
+# Prepare plots
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111, projection='3d')
 ax1.set_title("Accuracies")
