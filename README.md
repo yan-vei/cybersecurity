@@ -19,7 +19,7 @@ Wednesday, July 5, 2017
   -  10.293 	Attack DoS GoldenEye
   -   5.796 	Attack DoS SlowLoris
   -   5.499 	Attack DoS SlowHttpTest
-  -   11   Heartbleed
+  - 11   Heartbleed
   - 692.703 	All samples
 
 4. Modified dataset:
