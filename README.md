@@ -13,14 +13,14 @@ Wednesday, July 5, 2017
 3. Initial dataset structure:
 - 80 features per each sample
 - Traffic:
-  * 440.031 	Benign Traffic samples
-  * 252.673 	Attack samples DdoS
-  * 231.073 	Attack DoS Hulk
-  *  10.293 	Attack DoS GoldenEye
-  *   5.796 	Attack DoS SlowLoris
-  *   5.499 	Attack DoS SlowHttpTest
-  *      11 	Heartbleed 
-  * 692.703 	All samples
+  - 440.031 	Benign Traffic samples
+  - 252.673 	Attack samples DdoS
+  - 231.073 	Attack DoS Hulk
+  -  10.293 	Attack DoS GoldenEye
+  -   5.796 	Attack DoS SlowLoris
+  -   5.499 	Attack DoS SlowHttpTest
+  -      11 	Heartbleed 
+  - 692.703 	All samples
 
 4. Modified dataset:
 As our primary goal was to distinguish between an example of benign and malicious traffic,
