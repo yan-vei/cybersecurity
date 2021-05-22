@@ -9,9 +9,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import Normalizer
-##from sklearn.preprocessing import StandardScaler
 
-#Change the csv name pretty pls? :D
 dataset = pd.read_csv("Wednesday-workingHours.pcap_ISCX.csv")
 
     
